@@ -104,7 +104,7 @@ void Stage::CheckPos(Vector3* player) {
 			//高さ的に射程範囲外だったら弾く
 			if (player->y - 10 < block[i].pos.translation_.y && player->y + 10 > block[i].pos.translation_.y) {
 				//斬られたフラグのオン(前2ブロックもまとめて)
-				for (int j = i; j < i + 2; j++) {
+				for (int j = i - 1; j < i + 1; j++) {
 					//-1やblockNumより高い数値が出てしまったら弾く
 					if (j <= blockNum && j >= 0) {
 						block[j].isCut = true;
