@@ -12,9 +12,27 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
+
+	//モデル初期化
+	//model_->CreateFromOBJ("cube",true);
+	model_ = Model::Create();
+
+	//仮プレイヤーの初期化
+	player_ = new Player();
+	player_->Initialize(model_, viewProjection_);
+
+	//ステージの初期化
+	stage_ = new Stage();
+	stage_->Initialize(model_,0.0f);
+
+	//ビュープロジェクションの初期化
+	viewProjection_.Initialize();
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+	player_->Update();
+	stage_->Update(player_->GetPos(), player_->GetFlag());
+}
 
 void GameScene::Draw() {
 
@@ -42,6 +60,12 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+
+	//仮プレイヤー描画
+	player_->Draw(&viewProjection_);
+
+	//足場描画
+	stage_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

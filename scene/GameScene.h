@@ -10,6 +10,9 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
+#include "stage.h"
+#include "Player.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -50,4 +53,17 @@ class GameScene {
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	 
+	//ビュープロジェクション
+	ViewProjection viewProjection_;;
+
+	//モデル
+	Model* model_ = nullptr;
+
+	//ステージ
+	Stage* stage_ = nullptr;
+
+	//仮のプレイヤー
+	Player* player_ = nullptr;
+
 };
