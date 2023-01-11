@@ -39,6 +39,8 @@ private:
 	Block block[32][32];
 	//ブロック数
 	const int blockNum = 32;
+	//ブロックサイズ
+	const float blockSize = 4.0f;
 	//モデル
 	Model* model = nullptr;
 	//ズレる位置(疑似的だが2ブロック分ズレる)
