@@ -16,6 +16,7 @@ struct Block {	//実際に処理で使う足場のデータ
 	bool isCut;	//自身が斬られたかどうかのフラグ
 	bool cutted;	//斬られ終わったフラグ
 	Timer timer;
+	bool create;	//生成されてるかのフラグ
 };
 
 class Stage {
@@ -35,17 +36,17 @@ private:
 	void CheckIfCut();
 private:
 	//ワールド座標
-	Block block[32];
+	Block block[32][32];
 	//ブロック数
 	const int blockNum = 32;
 	//モデル
 	Model* model = nullptr;
-	//ズレる位置
-	const double slippingNumbers = 10.0;
+	//ズレる位置(疑似的だが2ブロック分ズレる)
+	const double slippingNumbers = 0.39;
 	//移動時間
 	const float maxTime = 30;
 
 	//debug用(リセット)
 	Input* input_ = nullptr;
-	float resetPosY;
+	float resetPosY[32];
 };

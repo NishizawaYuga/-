@@ -8,7 +8,7 @@ void Stage::Initialize(Model* model, float anyPosY) {
 	assert(model);
 
 	//リセット時のY座標取得
-	resetPosY = anyPosY;
+	//resetPosY = anyPosY;
 
 	//引数として受け取ったデータをメンバ変数に記録する
 	this->model = model;
@@ -34,15 +34,18 @@ void Stage::Initialize(Model* model, float anyPosY) {
 		}
 	}*/
 	//周囲のみがズレるようにする設定方法
-	for (int i = 0; i < blockNum; i++) {
-		block[i].pos.scale_ = { 2,2,2 };
-		block[i].pos.translation_ = { i * 4.0f - 50.0f,anyPosY,0.0f };
-		block[i].pos.Initialize();
-		block[i].cutted = false;
-		block[i].isCut = false;
-		block[i].timer.nowTime = 0;
-		block[i].timer.beginCount = false;
-		block[i].timer.slash = 0;
+	for (int y = 0; y < blockNum; y++) {	//i,jを本来使うが視覚的にわかりやすくするためx,yを使用
+		for (int x = 0; x < blockNum; x++) {
+			block[y][x].pos.scale_ = { 2,2,2 };
+			block[y][x].pos.translation_ = { x * 4.0f - 50.0f,y * 4.0f - 50.0f,0.0f };
+			block[y][x].pos.Initialize();
+			block[y][x].cutted = false;
+			block[y][x].isCut = false;
+			block[y][x].timer.nowTime = 0;
+			block[y][x].timer.beginCount = false;
+			block[y][x].timer.slash = 0;
+		}
+		resetPosY[y] = y * 4.0f - 50.0f;
 	}
 
 	input_ = Input::GetInstance();
@@ -55,7 +58,7 @@ void Stage::Update(Vector3 player, bool cutFlag) {
 		//block[slash].translation_.y = -4.5f;
 	}
 	//Rキーが押されたらリセット
-	if (input_->TriggerKey(DIK_R)) {
+	/*if (input_->TriggerKey(DIK_R)) {
 		for (int i = 0; i < blockNum; i++) {
 			block[i].pos.scale_ = { 2,2,2 };
 			block[i].pos.translation_ = { i * 4.0f - 50.0f,resetPosY,0.0f };
@@ -65,20 +68,26 @@ void Stage::Update(Vector3 player, bool cutFlag) {
 			block[i].timer.beginCount = false;
 			block[i].timer.slash = 0;
 		}
-	}
+	}*/
 
 	//全ての足場の更新
 	CheckIfCut();
-	for (int i = 0; i < blockNum; i++) {
-		block[i].pos.matWorld_ = matSet.MatIdentity(block[i].pos);
-		block[i].pos.TransferMatrix();
+	for (int y = 0; y < blockNum; y++) {
+		for (int x = 0; x < blockNum; x++) {
+			block[y][x].pos.matWorld_ = matSet.MatIdentity(block[y][x].pos);
+			block[y][x].pos.TransferMatrix();
+		}
 	}
 }
 
 void Stage::Draw(ViewProjection viewProjection) {
 	//3Dモデルを描画
-	for (int i = 0; i < blockNum; i++) {
-		model->Draw(block[i].pos, viewProjection);
+	for (int y = 0; y < blockNum; y++) {
+		for (int x = 0; x < blockNum; x++) {
+			if (block[y][x].create) {	//生成フラグが立っているものだけ描画(それ以外は見えないが存在はしている)
+				model->Draw(block[y][x].pos, viewProjection);
+			}
+		}
 	}
 
 }
@@ -86,30 +95,34 @@ void Stage::Draw(ViewProjection viewProjection) {
 void Stage::CheckPos(Vector3* player) {
 	float positionX[32];
 	float range = 100000.0f;
-	for (int i = 0; i < blockNum; i++) {
-		//プレイヤーと足場の距離を計算する
-		positionX[i] = block[i].pos.translation_.x - player->x;
-		//プレイヤーより後ろにあるなら-1をかけて正の数に戻す
-		if (positionX[i] < 0) {
-			positionX[i] *= -1.0f;
-		}
-		//距離が短いブロックを探す
-		if (range > positionX[i]) {
-			range = positionX[i];
+	for (int y = 0; y < blockNum; y++) {
+		for (int x = 0; x < blockNum; x++) {
+			//プレイヤーと足場の距離を計算する
+			positionX[x] = block[y][x].pos.translation_.x - player->x;
+			//プレイヤーより後ろにあるなら-1をかけて正の数に戻す
+			if (positionX[x] < 0) {
+				positionX[x] *= -1.0f;
+			}
+			//距離が短いブロックを探す
+			if (range > positionX[x]) {
+				range = positionX[x];
+			}
 		}
 	}
 	//最も距離が短かったブロックの番号を検索する
-	for (int i = 0; i < blockNum; i++) {
-		if (range == positionX[i]) {
-			//高さ的に射程範囲外だったら弾く
-			if (player->y - 10 < block[i].pos.translation_.y && player->y + 10 > block[i].pos.translation_.y) {
-				//斬られたフラグのオン(前2ブロックもまとめて)
-				for (int j = i - 1; j < i + 1; j++) {
-					//-1やblockNumより高い数値が出てしまったら弾く
-					if (j <= blockNum && j >= 0) {
-						block[j].isCut = true;
-						block[j].timer.slash = j;
-						block[j].timer.beginCount = true;
+	for (int y = 0; y < blockNum; y++) {
+		for (int x = 0; x < blockNum; x++) {
+			if (range == positionX[x]) {
+				//高さ的に射程範囲外だったら弾く
+				if (player->y - 10 < block[y][x].pos.translation_.y && player->y + 10 > block[y][x].pos.translation_.y) {
+					//斬られたフラグのオン(前2ブロックもまとめて)
+					for (int j = x - 1; j < x + 1; j++) {
+						//-1やblockNumより高い数値が出てしまったら弾く
+						if (j <= blockNum && j >= 0) {
+							block[y][j].isCut = true;
+							block[y][j].timer.slash = j;
+							block[y][j].timer.beginCount = true;
+						}
 					}
 				}
 			}
@@ -118,25 +131,28 @@ void Stage::CheckPos(Vector3* player) {
 }
 
 void Stage::CheckIfCut() {
-	for (int i = 0; i < blockNum; i++) {
-		//斬られたフラグがtrueかつ既に斬られているフラグがfalseかチェック
-		if (block[i].isCut && !block[i].cutted) {
-			//ずらす時間のカウントが始まっていればカウントを進める
-			if (block[i].timer.beginCount) {
-				//経過時間が移動時間になるまで処理を続ける
-				if (block[i].timer.nowTime >= maxTime) {
-					//block[block[i].timer.slash].timer.nowTime = 0;
-					block[block[i].timer.slash].cutted = true;
+	for (int y = 0; y < blockNum; y++) {
+		for (int x = 0; x < blockNum; x++) {
+			//斬られたフラグがtrueかつ既に斬られているフラグがfalseかチェック
+			if (block[y][x].isCut && !block[y][x].cutted) {
+				//ずらす時間のカウントが始まっていればカウントを進める
+				if (block[y][x].timer.beginCount) {
+					//経過時間が移動時間になるまで処理を続ける
+					if (block[y][x].timer.nowTime >= maxTime) {
+						//block[block[i].timer.slash].timer.nowTime = 0;
+						block[y][block[y][x].timer.slash].cutted = true;
+					}
+					//イージング処理
+					block[y][x].pos.translation_.y -= EASE::OutQuad(slippingNumbers, 0,
+						maxTime, block[y][x].timer.nowTime);
+					//経過時間が移動時間を超すまでの間加算し続ける
+					if (block[y][x].timer.nowTime < maxTime) {
+						block[y][x].timer.nowTime++;
+					}
 				}
-				//イージング処理
-				block[i].pos.translation_.y -= EASE::OutQuad(slippingNumbers, block[i].pos.translation_.y,
-					maxTime, block[i].timer.nowTime);
-				//経過時間が移動時間を超すまでの間加算し続ける
-				if (block[i].timer.nowTime < maxTime) {
-					block[i].timer.nowTime++;
-				}
-			}
 
+
+			}
 		}
 	}
 }
