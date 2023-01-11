@@ -10,6 +10,11 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
+#include "stage.h"
+#include "Player.h"
+#include "PlayerA.h"
+#include "Enemy.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -41,6 +46,11 @@ class GameScene {
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// 衝突判定
+	/// </summary>
+	void CheckAllCollisions();
+
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -50,4 +60,25 @@ class GameScene {
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	 
+	//ビュープロジェクション
+	ViewProjection viewProjection_;;
+
+	//モデル
+	Model* model_ = nullptr;
+
+	//ステージ
+	Stage* stage_ = nullptr;
+
+	//仮のプレイヤー
+	Player* player_ = nullptr;
+
+	//自キャラ
+	PlayerA* playera_ = nullptr;
+
+	// 敵キャラ
+	Enemy* enemy_ = nullptr;
+
+	//テクスチャハンドル
+	uint32_t textureHandle_ = 0;
 };
