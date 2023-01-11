@@ -123,6 +123,14 @@ void Stage::CheckPos(Vector3* player) {
 							block[y][j].isCut = true;
 							block[y][j].timer.slash = j;
 							block[y][j].timer.beginCount = true;
+							//‰º•ûŒü‚Í‰½‚à‚È‚¢‚Æ‚±‚ë‚Ü‚Å‘S•”Ža‚ê‚é
+							int numberY = y + 1;
+							while (block[numberY][j].create) {
+								block[numberY][j].isCut = true;
+								block[numberY][j].timer.slash = j;
+								block[numberY][j].timer.beginCount = true;
+								numberY++;
+							}
 						}
 					}
 				}
