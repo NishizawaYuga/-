@@ -22,7 +22,7 @@ struct Block {	//実際に処理で使う足場のデータ
 class Stage {
 public:
 	//初期化
-	void Initialize(Model* model,float anyPosY);
+	void Initialize(Model* model,int stageData[32][32]);
 	//更新
 	void Update(Vector3 player,bool cutFlag);
 	//テスト用更新

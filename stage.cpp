@@ -3,7 +3,7 @@
 #include "MatSet.h"
 #include "easing.h"
 
-void Stage::Initialize(Model* model, float anyPosY) {
+void Stage::Initialize(Model* model, int stageData[32][32]) {
 	//NULLポインタチェック
 	assert(model);
 
@@ -36,8 +36,9 @@ void Stage::Initialize(Model* model, float anyPosY) {
 	//周囲のみがズレるようにする設定方法
 	for (int y = 0; y < blockNum; y++) {	//i,jを本来使うが視覚的にわかりやすくするためx,yを使用
 		for (int x = 0; x < blockNum; x++) {
+			block[y][x].create = stageData[y][x];
 			block[y][x].pos.scale_ = { 2,2,2 };
-			block[y][x].pos.translation_ = { x * 4.0f - 50.0f,y * 4.0f - 50.0f,0.0f };
+			block[y][x].pos.translation_ = { x * 4.0f - 50.0f,y * -4.0f + 50.0f,0.0f };
 			block[y][x].pos.Initialize();
 			block[y][x].cutted = false;
 			block[y][x].isCut = false;

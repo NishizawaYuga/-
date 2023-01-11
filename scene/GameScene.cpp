@@ -23,7 +23,7 @@ void GameScene::Initialize() {
 
 	//ステージの初期化
 	stage_ = new Stage();
-	stage_->Initialize(model_,0.0f);
+	stage_->Initialize(model_,stageData);
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
