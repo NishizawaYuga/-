@@ -95,48 +95,56 @@ void Stage::Draw(ViewProjection viewProjection) {
 
 void Stage::CheckPos(Vector3* player) {
 	float positionX[32];
-	float range = 100000.0f;
 	for (int y = 0; y < blockNum; y++) {
 		for (int x = 0; x < blockNum; x++) {
-			//プレイヤーと足場の距離を計算する
-			positionX[x] = block[y][x].pos.translation_.x - player->x;
-			//プレイヤーより後ろにあるなら-1をかけて正の数に戻す
-			if (positionX[x] < 0) {
-				positionX[x] *= -1.0f;
-			}
-			//距離が短いブロックを探す
-			if (range > positionX[x]) {
-				range = positionX[x];
-			}
-		}
-	}
-	//最も距離が短かったブロックの番号を検索する
-	for (int y = 0; y < blockNum; y++) {
-		for (int x = 0; x < blockNum; x++) {
-			if (range == positionX[x]) {
-				//高さ的に射程範囲外だったら弾く
-				if (player->y - 10 < block[y][x].pos.translation_.y && player->y + 10 > block[y][x].pos.translation_.y) {
-					//斬られたフラグのオン(前2ブロックもまとめて)
-					for (int j = x - 1; j < x + 1; j++) {
-						//-1やblockNumより高い数値が出てしまったら弾く
-						if (j <= blockNum && j >= 0) {
-							block[y][j].isCut = true;
-							block[y][j].timer.slash = j;
-							block[y][j].timer.beginCount = true;
-							//下方向は何もないところまで全部斬れる
-							int numberY = y + 1;
-							while (block[numberY][j].create) {
-								block[numberY][j].isCut = true;
-								block[numberY][j].timer.slash = j;
-								block[numberY][j].timer.beginCount = true;
-								numberY++;
-							}
-						}
+			////プレイヤーと足場の距離を計算する
+			//positionX[x] = block[y][x].pos.translation_.x - player->x;
+			////プレイヤーより後ろにあるなら-1をかけて正の数に戻す
+			//if (positionX[x] < 0) {
+			//	positionX[x] *= -1.0f;
+			//}
+			////距離が短いブロックを探す
+			//if (range > positionX[x]) {
+			//	range = positionX[x];
+			//}
+			//プレイヤーを中心に範囲内にあるブロックを全て斬る
+			if (player->x - range < block[y][x].pos.translation_.x && player->x + range > block[y][x].pos.translation_.x) {
+				if (player->y - range < block[y][x].pos.translation_.y && player->y + range > block[y][x].pos.translation_.y) {
+					block[y][x].isCut = true;
+					block[y][x].timer.slash = x;
+					block[y][x].timer.beginCount = true;
+					//下方向は何もないところまで全部斬れる
+					int numberY = y + 1;
+					while (block[numberY][x].create) {
+						block[numberY][x].isCut = true;
+						block[numberY][x].timer.slash = x;
+						block[numberY][x].timer.beginCount = true;
+						numberY++;
 					}
 				}
 			}
 		}
 	}
+	////最も距離が短かったブロックの番号を検索する
+	//for (int y = 0; y < blockNum; y++) {
+	//	for (int x = 0; x < blockNum; x++) {
+	//		if (range == positionX[x]) {
+	//			//高さ的に射程範囲外だったら弾く
+	//			if (player->y - range < block[y][x].pos.translation_.y && player->y + range > block[y][x].pos.translation_.y) {
+	//				//斬られたフラグのオン(前2ブロックもまとめて)
+	//				for (int j = x - 1; j < x + 1; j++) {
+	//					//-1やblockNumより高い数値が出てしまったら弾く
+	//					if (j <= blockNum && j >= 0) {
+	//						block[y][j].isCut = true;
+	//						block[y][j].timer.slash = j;
+	//						block[y][j].timer.beginCount = true;
+	//						
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 void Stage::CheckIfCut() {

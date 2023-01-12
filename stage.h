@@ -51,4 +51,7 @@ private:
 	//debug用(リセット)
 	Input* input_ = nullptr;
 	float resetPosY[32];
+
+	//射程
+	const float range = 6.0f;
 };
