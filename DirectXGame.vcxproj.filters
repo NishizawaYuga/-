@@ -49,6 +49,12 @@
     <Filter Include="ヘッダー ファイル\math">
       <UniqueIdentifier>{647f4977-924a-4954-923f-5619e5afc9a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\process">
+      <UniqueIdentifier>{5de7fa36-df31-4fca-9d21-4ebf66df3bc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\process">
+      <UniqueIdentifier>{d9195663-c28b-47bb-bc72-80080b96f04b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -65,6 +71,15 @@
     </ClCompile>
     <ClCompile Include="scene\GameScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="stage.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MatSet.cpp">
+      <Filter>ソース ファイル\process</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +169,18 @@
     </ClInclude>
     <ClInclude Include="3d\TerrainCommon.h">
       <Filter>ヘッダー ファイル\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="stage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MatSet.h">
+      <Filter>ヘッダー ファイル\process</Filter>
+    </ClInclude>
+    <ClInclude Include="easing.h">
+      <Filter>ヘッダー ファイル\process</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
