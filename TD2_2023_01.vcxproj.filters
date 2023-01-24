@@ -76,6 +76,18 @@
     <Filter Include="ヘッダー ファイル\DontUse">
       <UniqueIdentifier>{3076ae9c-7692-4257-b619-6dd0ab16dcfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Player">
+      <UniqueIdentifier>{31b819aa-4450-4b32-9f03-acf06b4cba0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\Player">
+      <UniqueIdentifier>{1c6d14e2-c60f-4de8-9dea-7837fad0dbbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Field">
+      <UniqueIdentifier>{e8a1c512-6ed7-4f87-a641-578043127cde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\Field">
+      <UniqueIdentifier>{811d3b11-3bc6-4fda-b3e4-bbb293f98dd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -156,6 +168,15 @@
     <ClCompile Include="ModelBackup.cpp">
       <Filter>ソース ファイル\DontUse</Filter>
     </ClCompile>
+    <ClCompile Include="MatSet.cpp">
+      <Filter>ソース ファイル\Function</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="stage.cpp">
+      <Filter>ソース ファイル\Game\Field</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXBasis.h">
@@ -235,6 +256,18 @@
     </ClInclude>
     <ClInclude Include="ObjectBasis.h">
       <Filter>ヘッダー ファイル\DontUse</Filter>
+    </ClInclude>
+    <ClInclude Include="easing.h">
+      <Filter>ヘッダー ファイル\Function</Filter>
+    </ClInclude>
+    <ClInclude Include="MatSet.h">
+      <Filter>ヘッダー ファイル\Function</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="stage.h">
+      <Filter>ヘッダー ファイル\Game\Field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
