@@ -155,6 +155,7 @@
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GamePlayScene.cpp" />
+    <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix4.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Framework.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GamePlayScene.h" />
+    <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="MatSet.h" />
