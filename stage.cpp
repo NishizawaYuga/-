@@ -75,7 +75,7 @@ void Stage::Update(Vector3 player, bool cutFlag) {
 	}
 }
 
-void Stage::Draw(ViewProjection viewProjection) {
+void Stage::Draw(/*ViewProjection viewProjection*/) {
 	//3D���f����`��
 	for (int i = 0; i < blockNum; i++) {
 		model->Draw(/*block[i].pos, viewProjection*/);

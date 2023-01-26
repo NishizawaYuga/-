@@ -27,7 +27,7 @@ public:
 	//�e�X�g�p�X�V
 	void UpdateTest();
 	//�`��
-	void Draw(ViewProjection viewProjection);
+	void Draw(/*ViewProjection viewProjection*/);
 private:
 	//�ǂ̑��ꂪ�v���C���[�ƈ�ԋ߂����`�F�b�N
 	void CheckPos(Vector3* player);
