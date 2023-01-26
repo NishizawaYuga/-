@@ -7,6 +7,10 @@
 #include "Sprite.h"
 #include "Object3d.h"
 
+#include "Player.h"
+#include "stage.h"
+
+
 #include <memory>
 #include <List>
 
@@ -37,8 +41,17 @@ private:
 	/// <summary>
 	/// オブジェクト
 	/// </summary>
+	
+	Player* player_ = nullptr;
+	Object3d* playerObject_ = nullptr;
+	Model* playerModel_ = nullptr;
+
+	Stage* stage_ = nullptr;
+	Object3d* blockObject_ = nullptr;
+	Model* blockModel_ = nullptr;
 
 	/// <summary>
 	/// スプライト
 	/// </summary>
+	Sprite* reticleSprite_ = nullptr;
 };
