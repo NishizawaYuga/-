@@ -14,7 +14,7 @@
 
 class Player {
 public:
-	void Initialize(Object3d* model,Sprite* sprite/*, ViewProjection& viewProjection*/);
+	void Initialize(Object3d* model,Object3d* model2,Sprite* sprite/*, ViewProjection& viewProjection*/);
 	void Update();
 	void Draw(/*Object3d* object,Object3d* objectReticle*//*ViewProjection* viewProjection*/);
 	void DrawUI();

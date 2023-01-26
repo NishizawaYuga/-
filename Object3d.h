@@ -24,13 +24,6 @@ private: // エイリアス
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 public: // サブクラス
-	// 頂点データ構造体
-	struct VertexPosNormalUv {
-		Vector3 pos; // xyz座標
-		Vector3 normal; // 法線ベクトル
-		Vector2 uv;  // uv座標
-	};
-
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0 {
 		//Vector4 color;	// 色 (RGBA)
@@ -47,22 +40,6 @@ public: // サブクラス
 		float alpha;		//アルファ
 	};
 
-	//マテリアル
-	struct Material {
-		std::string name; //マテリアル名
-		Vector3 ambient; //アンビエント影響度
-		Vector3 diffuse; //ディフューズ影響度
-		Vector3 specular; //スペキュラー影響度
-		float alpha; //アルファ
-		std::string textureFilename; //テクスチャファイル名
-		//コンストラクタ
-		Material() {
-			ambient = { 0.3f,0.3f,0.3f };
-			diffuse = { 0.0f,0.0f,0.0f };
-			specular = { 0.0f,0.0f,0.0f };
-			alpha = 1.0f;
-		}
-	};
 private: // 定数
 	static const int division = 50;					// 分割数
 	static const float radius;				// 底面の半径
@@ -179,7 +156,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw(WorldTransform worldTransform);
 
 	/// <summary>
 	/// 座標の取得

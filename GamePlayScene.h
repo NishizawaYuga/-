@@ -46,8 +46,11 @@ private:
 	Object3d* playerObject_ = nullptr;
 	Model* playerModel_ = nullptr;
 
+	Object3d* reticleObject_ = nullptr;
+	Model* reticleModel_ = nullptr;
+
 	Stage* stage_ = nullptr;
-	Object3d* blockObject_ = nullptr;
+	Object3d* blockObject_ = nullptr ;
 	Model* blockModel_ = nullptr;
 
 	/// <summary>

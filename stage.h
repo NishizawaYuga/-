@@ -34,13 +34,13 @@ private:
 	//�O�̃u���b�N��a���Ă����玩����Y����֐�
 	void CheckIfCut();
 private:
-	//���[���h���W
-	Block block[32];
 	//�u���b�N��
 	const int blockNum = 32;
+	//���[���h���W
+	Block block_[32];
 	//���f��
 	//Model* model = nullptr;
-	Object3d* model = nullptr;
+	Object3d* model_[32] = { nullptr };
 	//�Y����ʒu
 	const double slippingNumbers = 10.0;
 	//�ړ�����

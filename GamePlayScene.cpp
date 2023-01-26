@@ -28,7 +28,7 @@ void GamePlayScene::Draw() {
 }
 
 void GamePlayScene::Initialize3d() {
-	playerModel_ = Model::LoadFromOBJ("chr_sword");
+	playerModel_ = Model::LoadFromOBJ("plane");
 	playerObject_ = Object3d::Create();
 	playerObject_->SetModel(playerModel_);
 
@@ -36,10 +36,15 @@ void GamePlayScene::Initialize3d() {
 	blockObject_ = Object3d::Create();
 	blockObject_->SetModel(blockModel_);
 
+	reticleModel_ = Model::LoadFromOBJ("sphere");
+	reticleObject_ = Object3d::Create();
+	reticleObject_->SetModel(reticleModel_);
+
 	player_ = new Player();
-	player_->Initialize(playerObject_,reticleSprite_);
+	player_->Initialize(playerObject_,reticleObject_,reticleSprite_);
 
 	stage_ = new Stage();
+
 	stage_->Initialize(blockObject_, 0.0f);
 }
 
@@ -48,6 +53,7 @@ void GamePlayScene::Initialize2d() {
 
 	reticleSprite_ = new Sprite();
 	reticleSprite_->Initialize(drawBas_,0);
+	reticleSprite_->SetAnchorPoint({ 0.5f, 0.5f });
 }
 
 void GamePlayScene::Update3d() {
@@ -72,9 +78,12 @@ void GamePlayScene::Finalize() {
 	SafeDelete(playerObject_);
 
 	SafeDelete(blockModel_);
+
 	SafeDelete(blockObject_);
 
 	SafeDelete(reticleSprite_);
+	SafeDelete(reticleModel_);
+	SafeDelete(reticleObject_);
 
 	SafeDelete(player_);
 	SafeDelete(stage_);

@@ -374,7 +374,7 @@ void Object3d::Update() {
 	worldTransform_.constBuff_->Unmap(0, nullptr);
 }
 
-void Object3d::Draw() {
+void Object3d::Draw(WorldTransform worldTransform) {
 	// nullptrチェック
 	assert(device);
 	assert(Object3d::cmdList);
@@ -382,7 +382,7 @@ void Object3d::Draw() {
 	if (model_ == nullptr) return;
 
 	// 定数バッファビューをセット
-	cmdList->SetGraphicsRootConstantBufferView(0, worldTransform_.constBuff_->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView(0, worldTransform.constBuff_->GetGPUVirtualAddress());
 
 	model_->Draw(cmdList, 1);
 }

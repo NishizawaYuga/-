@@ -7,19 +7,26 @@
 
 //using namespace MathUtility;
 
-void Player::Initialize(Object3d* model,Sprite* sprite/*, ViewProjection& viewProjection*/) {
+void Player::Initialize(Object3d* model,Object3d* model2,Sprite* sprite/*, ViewProjection& viewProjection*/) {
 	assert(model);
 	//assert(&viewProjection);
 
 	object_ = model;
-	objectReticle_ = model;
+	objectReticle_ = model2;
 
 	input_ = Input::GetInstance();
 	//debugText_ = DebugText::GetInstance();
 
 	worldTransform_.Initialize();
-	//viewProjection_ = viewProjection;
+	//worldTransform_.scale_ = { 2,2,2 };
+
+	worldTransform_.scale_ = { 1,1,1 };
+
+	worldTransform_.position_ = { 0,0,-50 };
 	object_->SetWorldTransform(worldTransform_);
+
+	object_->SetScale({ 10, 10, 10 });
+	viewProjection_ = object_->GetViewProjection();
 
 	worldTransform3DReticle_.Initialize();
 	objectReticle_->SetWorldTransform(worldTransform3DReticle_);
@@ -58,6 +65,9 @@ void Player::Update() {
 	/*for (std::unique_ptr<PlayerBullet>& bullet : bullets_) {
 		bullet->Update();
 	}*/
+
+	objectReticle_->Update();
+	object_->Update();
 }
 
 void Player::Draw(/*Object3d* object,Object3d* objectReticle*//*ViewProjection* viewProjection*/) {
@@ -65,9 +75,9 @@ void Player::Draw(/*Object3d* object,Object3d* objectReticle*//*ViewProjection* 
 	//objectReticle->SetWorldTransform(worldTransform3DReticle_);
 
 
-	objectReticle_->Draw(/*worldTransform3DReticle_, viewProjection_*/);
+	objectReticle_->Draw(worldTransform3DReticle_ /*,viewProjection_*/);
 
-	object_->Draw(/*worldTransform_, *viewProjection*/);
+	object_->Draw(worldTransform_/*, *viewProjection */ );
 
 	/*for (std::unique_ptr<PlayerBullet>& bullet : bullets_) {
 		bullet->Draw(viewProjection_);
@@ -91,6 +101,7 @@ void Player::Move() {
 	}
 	else */
 	if(true) {
+	}
 		if (input_->PressKey(DIK_D)) {
 			speed.x = 1;
 		}
@@ -109,7 +120,6 @@ void Player::Move() {
 		if (input_->TriggerMouse(0)) {
 			cutFlag = true;
 		}
-	}
 
 	worldTransform_.position_.x += speed.x;
 	worldTransform_.position_.y += speed.y;
@@ -146,16 +156,18 @@ void Player::Attack() {
 void Player::Reticle() {
 	//XINPUT_STATE joyState;
 
-	POINT mousePosition;
-	//マウスの座標を取得
-	GetCursorPos(&mousePosition);
+	//POINT mousePosition;
+	////マウスの座標を取得
+	//GetCursorPos(&mousePosition);
 
-	//クライアントエリア座標に変換
-	HWND hwnd =
-		WinApp::GetInstance()->GetHWND();
-	ScreenToClient(hwnd, &mousePosition);
+	////クライアントエリア座標に変換
+	//HWND hwnd =
+	//	WinApp::GetInstance()->GetHWND();
+	//ScreenToClient(hwnd, &mousePosition);
+
 
 	Vector2 spritePosition = sprite2DRethicle_->GetPosition();
+	Vector2 mousePosition = input_->GetMousePosition();
 
 	//if (input_->GetJoystickState(0, joyState)) {
 	//	spritePosition.x += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 5;
@@ -165,10 +177,11 @@ void Player::Reticle() {
 	//}
 //	else 
 	if(true) {
+	}
 		//マウス座標を代入
 		sprite2DRethicle_->SetPosition(
 			Vector2(mousePosition.x, mousePosition.y));
-	}
+		sprite2DRethicle_->Update();
 
 	//ビュープロジェクションビューポート合成行列
 	Matrix4 matViewPort = Matrix4Identity();
