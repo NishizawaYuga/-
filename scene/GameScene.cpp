@@ -14,8 +14,9 @@ void GameScene::Initialize() {
 	debugText_ = DebugText::GetInstance();
 
 	//モデル初期化
-	//model_->CreateFromOBJ("cube",true);
+	//model_->CreateFromOBJ("floorblock",true);
 	model_ = Model::Create();
+	floorModel_ = Model::CreateFromOBJ("floorblock", true);
 
 	//仮プレイヤーの初期化
 	player_ = new Player();
@@ -23,7 +24,7 @@ void GameScene::Initialize() {
 
 	//ステージの初期化
 	stage_ = new Stage();
-	stage_->Initialize(model_,stageData);
+	stage_->Initialize(floorModel_, stageData);
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();

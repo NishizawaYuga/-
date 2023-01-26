@@ -59,6 +59,7 @@ private: // メンバ変数
 
 	//モデル
 	Model* model_ = nullptr;
+	Model* floorModel_ = nullptr;
 
 	//ステージ
 	Stage* stage_ = nullptr;
