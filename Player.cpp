@@ -3,27 +3,33 @@
 #include <cassert>
 #include "WinApp.h"
 
+#include "Model.h"
+
 //using namespace MathUtility;
 
-void Player::Initialize(Model* model, ViewProjection& viewProjection) {
+void Player::Initialize(Object3d* model,Sprite* sprite/*, ViewProjection& viewProjection*/) {
 	assert(model);
-	assert(&viewProjection);
+	//assert(&viewProjection);
 
-	model_ = model;
-	modelRethicle_ = model;
+	object_ = model;
+	objectReticle_ = model;
 
 	input_ = Input::GetInstance();
 	//debugText_ = DebugText::GetInstance();
 
 	worldTransform_.Initialize();
-	viewProjection_ = viewProjection;
+	//viewProjection_ = viewProjection;
+	object_->SetWorldTransform(worldTransform_);
 
 	worldTransform3DReticle_.Initialize();
+	objectReticle_->SetWorldTransform(worldTransform3DReticle_);
 
 	cutFlag = false;
 
 	//レティクルのテクスチャ
 	//uint32_t textureReticle = TextureManager::Load("cursor.png");
+
+	sprite2DRethicle_ = sprite;
 
 	////スプライト生成
 	//sprite2DRethicle_.reset(
@@ -33,7 +39,10 @@ void Player::Initialize(Model* model, ViewProjection& viewProjection) {
 	//		Vector2(0.5f, 0.5f)
 	//	)
 	//);
+	
+	
 	//sprite2DRethicle_->SetSize(Vector2(64, 64));
+
 }
 
 void Player::Update() {
@@ -51,11 +60,14 @@ void Player::Update() {
 	}*/
 }
 
-void Player::Draw(ViewProjection* viewProjection) {
+void Player::Draw(/*Object3d* object,Object3d* objectReticle*//*ViewProjection* viewProjection*/) {
+	//object->SetWorldTransform(worldTransform_);
+	//objectReticle->SetWorldTransform(worldTransform3DReticle_);
 
-	//modelRethicle_->Draw(worldTransform3DReticle_, viewProjection_);
 
-	//model_->Draw(worldTransform_, *viewProjection);
+	objectReticle_->Draw(/*worldTransform3DReticle_, viewProjection_*/);
+
+	object_->Draw(/*worldTransform_, *viewProjection*/);
 
 	/*for (std::unique_ptr<PlayerBullet>& bullet : bullets_) {
 		bullet->Draw(viewProjection_);
@@ -71,7 +83,7 @@ void Player::Move() {
 
 	Vector2 speed;
 
-	//cutFlag = false;
+	cutFlag = false;
 
 /*	if (input_->GetJoystickState(0, joyState)) {
 		speed.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * 1;
@@ -103,8 +115,9 @@ void Player::Move() {
 	worldTransform_.position_.y += speed.y;
 
 	worldTransform_.matWorld_ = ReCalcMatWorld(worldTransform_);
-	worldTransform_.UpdateMatrix();
 
+	worldTransform_.UpdateMatrix();
+	object_->SetWorldTransform(worldTransform_);
 }
 
 void Player::Attack() {
@@ -142,7 +155,7 @@ void Player::Reticle() {
 		WinApp::GetInstance()->GetHWND();
 	ScreenToClient(hwnd, &mousePosition);
 
-	//Vector2 spritePosition = sprite2DRethicle_->GetPosition();
+	Vector2 spritePosition = sprite2DRethicle_->GetPosition();
 
 	//if (input_->GetJoystickState(0, joyState)) {
 	//	spritePosition.x += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 5;
@@ -150,11 +163,12 @@ void Player::Reticle() {
 
 	//	sprite2DRethicle_->SetPosition(spritePosition);
 	//}
-	//else {
-	//	//マウス座標を代入
-	//	sprite2DRethicle_->SetPosition(
-	//		Vector2(mousePosition.x, mousePosition.y));
-	//}
+//	else 
+	if(true) {
+		//マウス座標を代入
+		sprite2DRethicle_->SetPosition(
+			Vector2(mousePosition.x, mousePosition.y));
+	}
 
 	//ビュープロジェクションビューポート合成行列
 	Matrix4 matViewPort = Matrix4Identity();
@@ -170,34 +184,37 @@ void Player::Reticle() {
 	//上を逆行列化
 	Matrix4 matInverseVPV = Matrix4Inverse(matVPV);
 
-	////ニア
-	//Vector3 posNear = Vector3(
-	//	sprite2DRethicle_->GetPosition().x,
-	//	sprite2DRethicle_->GetPosition().y,
-	//	0);
-	//posNear = Vector3TransformCoord(posNear, matInverseVPV);
+	//ニア
+	Vector3 posNear = Vector3(
+		sprite2DRethicle_->GetPosition().x,
+		sprite2DRethicle_->GetPosition().y,
+		0);
+	posNear = Vector3Transform(posNear, matInverseVPV);
 	//ファー
-	/*Vector3 posFar = Vector3(
+	Vector3 posFar = Vector3(
 		sprite2DRethicle_->GetPosition().x,
 		sprite2DRethicle_->GetPosition().y,
 		1);
-	posFar = Vector3TransformCoord(posFar, matInverseVPV);*/
+	posFar = Vector3Transform(posFar, matInverseVPV);
 	
 	//レイ
-	//Vector3 rayDirection = posFar - posNear;
+	Vector3 rayDirection = posFar - posNear;
 
 	const float kDistanceTestObject = 50;
 	//ニア→レイ
-	/*Vector3 offset = rayDirection - posNear;
-	offset = Vector3Normalize(offset);*/
+	Vector3 offset = rayDirection - posNear;
+	offset = Vector3Normalize(offset);
 
-	//worldTransform3DReticle_.translation_ = offset * kDistanceTestObject;
+	worldTransform3DReticle_.position_ = offset * kDistanceTestObject;
 	worldTransform3DReticle_.position_.z -= 50;
 
 	//再計算
 	worldTransform3DReticle_.matWorld_ = ReCalcMatWorld(worldTransform3DReticle_);
 	//転送
 	worldTransform3DReticle_.UpdateMatrix();
+
+	objectReticle_->SetWorldTransform(worldTransform3DReticle_);
+	objectReticle_->Update();
 
 	//debugText_->SetScale(1);
 	///*debugText_->SetPos(10, 100);

@@ -1,7 +1,8 @@
 #pragma once
 #include "Input.h"
 //#include "DebugText.h"
-#include "Model.h"
+//#include "Model.h"
+#include "Object3d.h"
 #include "WorldTransform.h"
 #include "Sprite.h"
 #include "SafeDelete.h"
@@ -13,9 +14,9 @@
 
 class Player {
 public:
-	void Initialize(Model* model, ViewProjection& viewProjection);
+	void Initialize(Object3d* model,Sprite* sprite/*, ViewProjection& viewProjection*/);
 	void Update();
-	void Draw(ViewProjection* viewProjection);
+	void Draw(/*Object3d* object,Object3d* objectReticle*//*ViewProjection* viewProjection*/);
 	void DrawUI();
 
 	//座標ゲッター
@@ -32,7 +33,7 @@ public:
 private:
 	Input* input_ = nullptr;
 	//DebugText* debugText_ = nullptr;
-	Model* model_ = nullptr;
+	Object3d* object_ = nullptr;
 
 	WorldTransform worldTransform_;
 	ViewProjection viewProjection_;
@@ -42,8 +43,9 @@ private:
 
 	//レティクル用
 	WorldTransform worldTransform3DReticle_;
-	std::unique_ptr<Sprite> sprite2DRethicle_;
-	Model* modelRethicle_ = nullptr;
+	//std::unique_ptr<Sprite> sprite2DRethicle_;
+	Sprite* sprite2DRethicle_ = nullptr;
+	Object3d* objectReticle_ = nullptr;
 
 	//斬ったフラグ
 	bool cutFlag;
