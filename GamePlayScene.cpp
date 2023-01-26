@@ -32,7 +32,7 @@ void GamePlayScene::Initialize3d() {
 	playerObject_ = Object3d::Create();
 	playerObject_->SetModel(playerModel_);
 
-	blockModel_ = Model::LoadFromOBJ("cube");
+	blockModel_ = Model::LoadFromOBJ("floorblock");
 	blockObject_ = Object3d::Create();
 	blockObject_->SetModel(blockModel_);
 
