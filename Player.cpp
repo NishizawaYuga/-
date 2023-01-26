@@ -29,6 +29,7 @@ void Player::Initialize(Object3d* model,Object3d* model2,Sprite* sprite/*, ViewP
 	viewProjection_ = object_->GetViewProjection();
 
 	worldTransform3DReticle_.Initialize();
+	worldTransform3DReticle_.scale_ = { 2,2,2 };
 	objectReticle_->SetWorldTransform(worldTransform3DReticle_);
 
 	cutFlag = false;
