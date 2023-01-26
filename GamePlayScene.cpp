@@ -45,7 +45,7 @@ void GamePlayScene::Initialize3d() {
 
 	stage_ = new Stage();
 
-	stage_->Initialize(blockObject_, 0.0f);
+	stage_->Initialize(blockObject_, stageData);
 }
 
 void GamePlayScene::Initialize2d() {

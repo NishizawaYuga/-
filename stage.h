@@ -5,48 +5,53 @@
 #include "WorldTransform.h"
 #include "Input.h"
 
-struct Timer {	//�C�[�W���O�p�f�[�^
-	float nowTime;	//�o�ߎ���
-	bool beginCount;	//�J�E���g�J�n�̃t���O
-	int slash;	//�a��ꂽ�ԍ�
+struct Timer {	//イージング用データ
+	float nowTime;	//経過時間
+	bool beginCount;	//カウント開始のフラグ
+	int slash;	//斬られた番号
 };
 
-struct Block {	//���ۂɏ����Ŏg������̃f�[�^
-	WorldTransform pos;	//���g�̍��W
-	bool isCut;	//���g���a��ꂽ���ǂ����̃t���O
-	bool cutted;	//�a���I������t���O
+struct Block {	//実際に処理で使う足場のデータ
+	WorldTransform pos;	//自身の座標
+	bool isCut;	//自身が斬られたかどうかのフラグ
+	bool cutted;	//斬られ終わったフラグ
 	Timer timer;
+	bool create;	//生成されてるかのフラグ
 };
 
 class Stage {
 public:
-	//������
-	void Initialize(Object3d* model,float anyPosY);
-	//�X�V
+	//初期化
+	void Initialize(Object3d* model, int stageData[32][32]);
+	//更新
 	void Update(Vector3 player,bool cutFlag);
-	//�e�X�g�p�X�V
+	//テスト用更新
 	void UpdateTest();
-	//�`��
+	//描画
 	void Draw(/*ViewProjection viewProjection*/);
 private:
-	//�ǂ̑��ꂪ�v���C���[�ƈ�ԋ߂����`�F�b�N
+	//どの足場がプレイヤーと一番近いかチェック
 	void CheckPos(Vector3* player);
-	//�O�̃u���b�N��a���Ă����玩����Y����֐�
+	//前のブロックも斬られていたら自分もズレる関数
 	void CheckIfCut();
 private:
-	//�u���b�N��
+	//ワールド座標
+	Block block[32][32];
+	//ブロック数
 	const int blockNum = 32;
-	//���[���h���W
-	Block block_[32];
-	//���f��
+	//ブロックサイズ
+	const float blockSize = 4.0f;
 	//Model* model = nullptr;
-	Object3d* model_[32] = { nullptr };
-	//�Y����ʒu
-	const double slippingNumbers = 10.0;
-	//�ړ�����
+	Object3d* model_[32][32] = {nullptr};
+	//ズレる位置(疑似的だが2ブロック分ズレる)
+	const double slippingNumbers = 0.39;
+	//移動時間
 	const float maxTime = 30;
 
-	//debug�p(���Z�b�g)
+	//debug用(リセット)
 	Input* input_ = nullptr;
-	float resetPosY;
+	float resetPosY[32];
+
+	//射程
+	const float range = 6.0f;
 };
