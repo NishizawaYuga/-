@@ -1,7 +1,7 @@
 #include "Obj.hlsli"
 
 VSOutput main( float4 pos : POSITION, float3 normal:NORMAL, float2 uv:TEXCOORD ){
-	VSOutput output; //ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚É“n‚·’l
+	VSOutput output; //ï¿½sï¿½Nï¿½Zï¿½ï¿½ï¿½Vï¿½Fï¿½[ï¿½_ï¿½[ï¿½É“nï¿½ï¿½ï¿½l
 	
 	output.svpos = mul(mat, pos);
 	output.normal = normal;

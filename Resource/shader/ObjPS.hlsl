@@ -1,15 +1,15 @@
 #include "Obj.hlsli"
 
-Texture2D<float4>tex : register(t0); //0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-SamplerState smp : register(s0); //0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰[
+Texture2D<float4>tex : register(t0); //0ï¿½ÔƒXï¿½ï¿½ï¿½bï¿½gï¿½Éİ’è‚³ï¿½ê‚½ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½
+SamplerState smp : register(s0); //0ï¿½ÔƒXï¿½ï¿½ï¿½bï¿½gï¿½Éİ’è‚³ï¿½ê‚½ï¿½Tï¿½ï¿½ï¿½vï¿½ï¿½ï¿½[
 
 float4 main(VSOutput input) : SV_TARGET{
-	float3 light = normalize(float3(1,-1,1)); // ‰E‰º‰œ Œü‚«‚Ìƒ‰ƒCƒg
+	float3 light = normalize(float3(1,-1,1)); // ï¿½Eï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½g
 	float light_diffuse = saturate(dot(-light, input.normal));
 	float3 shade_color;
 
-	shade_color = m_ambient; //ƒAƒ“ƒrƒGƒ“ƒg€
-	shade_color += m_diffuse * light_diffuse; //ƒfƒBƒtƒ…[ƒY€
+	shade_color = m_ambient; //ï¿½Aï¿½ï¿½ï¿½rï¿½Gï¿½ï¿½ï¿½gï¿½ï¿½
+	shade_color += m_diffuse * light_diffuse; //ï¿½fï¿½Bï¿½tï¿½ï¿½ï¿½[ï¿½Yï¿½ï¿½
 	
 	float4 texcolor = tex.Sample(smp, input.uv);
 	return float4(texcolor.rgb * shade_color,texcolor.a * m_alpha);

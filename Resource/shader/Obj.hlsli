@@ -1,17 +1,17 @@
 cbuffer cbuff0 : register(b0) {
-	matrix mat; //3D•ÏŠ·s—ñ
+	matrix mat; //3Dï¿½ÏŠï¿½ï¿½sï¿½ï¿½
 };
 
 cbuffer cbuff1 : register(b1) {
-	float3 m_ambient : packoffset(c0); //ƒAƒ“ƒrƒGƒ“ƒgŒW”
-	float3 m_diffuse : packoffset(c1); //ƒfƒBƒtƒ…[ƒYŒW”
-	float3 m_specular : packoffset(c2); //ƒXƒyƒLƒ…ƒ‰[ŒW”
-	float m_alpha : packoffset(c2.w); //ƒAƒ‹ƒtƒ@
+	float3 m_ambient : packoffset(c0); //ï¿½Aï¿½ï¿½ï¿½rï¿½Gï¿½ï¿½ï¿½gï¿½Wï¿½ï¿½
+	float3 m_diffuse : packoffset(c1); //ï¿½fï¿½Bï¿½tï¿½ï¿½ï¿½[ï¿½Yï¿½Wï¿½ï¿½
+	float3 m_specular : packoffset(c2); //ï¿½Xï¿½yï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½
+	float m_alpha : packoffset(c2.w); //ï¿½Aï¿½ï¿½ï¿½tï¿½@
 }
 
-//’¸“_ƒVƒF[ƒ_[‚©‚çƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Ö‚Ì‚â‚èæ‚è‚Ég—p‚·‚é\‘¢‘Ì
+//ï¿½ï¿½ï¿½_ï¿½Vï¿½Fï¿½[ï¿½_ï¿½[ï¿½ï¿½ï¿½ï¿½sï¿½Nï¿½Zï¿½ï¿½ï¿½Vï¿½Fï¿½[ï¿½_ï¿½[ï¿½Ö‚Ì‚ï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½
 struct VSOutput {
-	float4 svpos : SV_POSITION; //ƒVƒXƒeƒ€—p’¸“_À•W
-	float3 normal : NORMAL; //–@üƒxƒNƒgƒ‹
-	float2 uv : TEXCOORD; //uv’l
+	float4 svpos : SV_POSITION; //ï¿½Vï¿½Xï¿½eï¿½ï¿½ï¿½pï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½W
+	float3 normal : NORMAL; //ï¿½@ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½
+	float2 uv : TEXCOORD; //uvï¿½l
 };
