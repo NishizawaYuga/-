@@ -1,12 +1,13 @@
 #pragma once
 #include "Input.h"
-#include "DebugText.h"
+//#include "DebugText.h"
 #include "Model.h"
 #include "WorldTransform.h"
 #include "Sprite.h"
 #include "SafeDelete.h"
 #include <memory>
 #include <list>
+#include "ViewProjection.h"
 
 //#include "PlayerBullet.h"
 
@@ -18,7 +19,7 @@ public:
 	void DrawUI();
 
 	//座標ゲッター
-	Vector3 GetPos() { return worldTransform_.translation_; }
+	Vector3 GetPos() { return worldTransform_.position_; }
 	//フラグゲッター
 	bool GetFlag() { return cutFlag; }
 private:
@@ -30,7 +31,7 @@ private:
 public:
 private:
 	Input* input_ = nullptr;
-	DebugText* debugText_ = nullptr;
+	//DebugText* debugText_ = nullptr;
 	Model* model_ = nullptr;
 
 	WorldTransform worldTransform_;
