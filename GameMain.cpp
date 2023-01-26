@@ -4,27 +4,27 @@
 Input* GameMain::input_ = Input::GetInstance();
 
 void GameMain::Initialize() {
-	FrameworkΓ::Initialize();
+	Framework::Initialize();
 	scene_ = new GamePlayScene();
 	scene_->Initialize();
 }
 
 void GameMain::Update() {
-	FrameworkΓ::Update();
+	Framework::Update();
 
 	scene_->Update();
 }
 
 void GameMain::Draw() {
 	//描画前処理
-	FrameworkΓ::GetDirectXBasis()->PreDraw();
+	Framework::GetDirectXBasis()->PreDraw();
 	scene_->Draw();
 	//描画後処理
-	FrameworkΓ::GetDirectXBasis()->PostDraw();
+	Framework::GetDirectXBasis()->PostDraw();
 }
 
 void GameMain::Finalize() {
 	scene_->Finalize();
 	delete scene_;
-	FrameworkΓ::Finalize();
+	Framework::Finalize();
 }

@@ -169,7 +169,7 @@ void Stage::CheckIfCut() {
 						block[y][block[y][x].timer.slash].cutted = true;
 					}
 					//イージング処理
-					block[y][x].pos.position_.y -= EASE::OutQuad(slippingNumbers, block[y][x].pos.position_.y,
+					block[y][x].pos.position_.y -= EASE::OutQuad(slippingNumbers, 0,
 						maxTime, block[y][x].timer.nowTime);
 					//経過時間が移動時間を超すまでの間加算し続ける
 					if (block[y][x].timer.nowTime < maxTime) {

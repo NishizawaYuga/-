@@ -3,7 +3,7 @@
 #include "DirectXBasis.h"
 #include "Input.h"
 
-class FrameworkΓ {
+class Framework{
 public:
 	//実行
 	void Run();
@@ -26,5 +26,5 @@ private:
 	bool isEndRequest_ = false;
 
 public:
-	virtual ~FrameworkΓ() = default;
+	virtual ~Framework() = default;
 };
