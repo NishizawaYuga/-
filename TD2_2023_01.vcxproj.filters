@@ -94,6 +94,12 @@
     <Filter Include="ヘッダー ファイル\ImGui">
       <UniqueIdentifier>{58f35ec7-7b0b-4d3f-a429-8b0658797b46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\Enemy">
+      <UniqueIdentifier>{3861e8b8-15a8-481d-a11b-78aa3d60eeb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Enemy">
+      <UniqueIdentifier>{8bedc1dd-2018-45b6-88be-02f0b4d1c40b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -185,6 +191,21 @@
     </ClCompile>
     <ClCompile Include="math\Degree.cpp">
       <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="base\Function.cpp">
+      <Filter>ソース ファイル\Function</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\PlayerA.cpp">
+      <Filter>ソース ファイル\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\testplayer.cpp">
+      <Filter>ソース ファイル\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="entity\Enemy.cpp">
+      <Filter>ソース ファイル\Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="3d\Skydome.cpp">
+      <Filter>ソース ファイル\Game\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +301,24 @@
     </ClInclude>
     <ClInclude Include="math\Degree.h">
       <Filter>ヘッダー ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Function.h">
+      <Filter>ヘッダー ファイル\Function</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Enum.h">
+      <Filter>ヘッダー ファイル\Function</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\PlayerA.h">
+      <Filter>ヘッダー ファイル\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\testplayer.h">
+      <Filter>ヘッダー ファイル\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\Enemy.h">
+      <Filter>ヘッダー ファイル\Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="3d\Skydome.h">
+      <Filter>ヘッダー ファイル\Game\Field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

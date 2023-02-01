@@ -9,6 +9,7 @@
 
 #include "Player.h"
 #include "stage.h"
+#include <Enemy.h>
 
 
 #include <memory>
@@ -52,6 +53,10 @@ private:
 	Stage* stage_ = nullptr;
 	Object3d* blockObject_ = nullptr ;
 	Model* blockModel_ = nullptr;
+
+	Enemy* enemy_ = nullptr;
+	Object3d* enemyObject_ = nullptr;
+	Model* enemyModel_ = nullptr;
 
 	/// <summary>
 	/// スプライト

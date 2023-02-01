@@ -40,12 +40,18 @@ void GamePlayScene::Initialize3d() {
 	reticleObject_ = Object3d::Create();
 	reticleObject_->SetModel(reticleModel_);
 
+	enemyModel_ = Model::LoadFromOBJ("cube");
+	enemyObject_ = Object3d::Create();
+	enemyObject_->SetModel(enemyModel_);
+
 	player_ = new Player();
 	player_->Initialize(playerObject_,reticleObject_,reticleSprite_);
 
 	stage_ = new Stage();
-
 	stage_->Initialize(blockObject_, stageData);
+
+	enemy_ = new Enemy();
+	enemy_->Initialize(enemyObject_);
 }
 
 void GamePlayScene::Initialize2d() {
@@ -59,6 +65,7 @@ void GamePlayScene::Initialize2d() {
 void GamePlayScene::Update3d() {
 	player_->Update();
 	stage_->Update(player_->GetPos(), player_->GetFlag());
+	enemy_->Update();
 }
 
 void GamePlayScene::Update2d() {
@@ -67,6 +74,7 @@ void GamePlayScene::Update2d() {
 void GamePlayScene::Draw3d() {
 	stage_->Draw();
 	player_->Draw(/*playerObject_,playerObject_*/);
+	enemy_->Draw();
 }
 
 void GamePlayScene::Draw2d() {

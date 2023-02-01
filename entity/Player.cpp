@@ -2,7 +2,6 @@
 //#include "MathUtility.h"
 #include <cassert>
 #include "WinApp.h"
-
 #include "Model.h"
 
 //using namespace MathUtility;

@@ -152,9 +152,11 @@
     <ClCompile Include="3d\ModelBackup.cpp" />
     <ClCompile Include="3d\Object3d.cpp" />
     <ClCompile Include="3d\ObjectBasis.cpp" />
+    <ClCompile Include="3d\Skydome.cpp" />
     <ClCompile Include="3d\stage.cpp" />
     <ClCompile Include="base\FixFPS.cpp" />
     <ClCompile Include="base\Framework.cpp" />
+    <ClCompile Include="base\Function.cpp" />
     <ClCompile Include="base\GameMain.cpp" />
     <ClCompile Include="base\ImGuiManager.cpp" />
     <ClCompile Include="base\ViewProjection.cpp" />
@@ -163,7 +165,10 @@
     <ClCompile Include="control\Input.cpp" />
     <ClCompile Include="directX\DirectXBasis.cpp" />
     <ClCompile Include="directX\DrawBasis.cpp" />
+    <ClCompile Include="entity\Enemy.cpp" />
     <ClCompile Include="entity\Player.cpp" />
+    <ClCompile Include="entity\PlayerA.cpp" />
+    <ClCompile Include="entity\testplayer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Degree.cpp" />
     <ClCompile Include="math\Matrix4.cpp" />
@@ -184,9 +189,12 @@
     <ClInclude Include="3d\ModelBackup.h" />
     <ClInclude Include="3d\Object3d.h" />
     <ClInclude Include="3d\ObjectBasis.h" />
+    <ClInclude Include="3d\Skydome.h" />
     <ClInclude Include="3d\stage.h" />
+    <ClInclude Include="base\Enum.h" />
     <ClInclude Include="base\FixFPS.h" />
     <ClInclude Include="base\Framework.h" />
+    <ClInclude Include="base\Function.h" />
     <ClInclude Include="base\GameMain.h" />
     <ClInclude Include="base\ImGuiManager.h" />
     <ClInclude Include="base\SafeDelete.h" />
@@ -196,7 +204,10 @@
     <ClInclude Include="control\Input.h" />
     <ClInclude Include="directX\DirectXBasis.h" />
     <ClInclude Include="directX\DrawBasis.h" />
+    <ClInclude Include="entity\Enemy.h" />
     <ClInclude Include="entity\Player.h" />
+    <ClInclude Include="entity\PlayerA.h" />
+    <ClInclude Include="entity\testplayer.h" />
     <ClInclude Include="math\Degree.h" />
     <ClInclude Include="math\easing.h" />
     <ClInclude Include="math\Matrix4.h" />
