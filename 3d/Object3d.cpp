@@ -102,12 +102,23 @@ void Object3d::SetTarget(Vector3 target) {
 void Object3d::SetCameraMoveVector(Vector3 pos) {
 	Vector3 eye_moved = GetEye();
 	Vector3 target_moved = GetTarget();
+	const float canMaxMove = 422.0f;
+	const float canMinMove = -10.0f;
 
 	eye_moved.x = pos.x;
 	//eye_moved.y = pos.y;
 
 	target_moved.x = pos.x;
 	//target_moved.y = pos.y;
+
+	if (target_moved.x < canMinMove){
+		eye_moved.x = canMinMove;
+		target_moved.x = canMinMove;
+	}
+	if (target_moved.x > canMaxMove) {
+		eye_moved.x = canMaxMove;
+		target_moved.x = canMaxMove;
+	}
 
 	SetEye(eye_moved);
 	SetTarget(target_moved);

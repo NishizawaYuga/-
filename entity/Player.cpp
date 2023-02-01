@@ -95,6 +95,11 @@ void Player::Move() {
 
 	cutFlag = false;
 
+	const float canMinMoveX = -50.0f;
+	const float canMaxMoveX = 472.0f;
+	const float canMaxMoveY = 20.0f;
+	const float canMinMoveY = -14.0f;
+
 /*	if (input_->GetJoystickState(0, joyState)) {
 		speed.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * 1;
 		speed.y += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * 1;
@@ -123,6 +128,20 @@ void Player::Move() {
 
 	worldTransform_.position_.x += speed.x;
 	worldTransform_.position_.y += speed.y;
+
+	//移動制限
+	if (worldTransform_.position_.x < canMinMoveX) {
+		worldTransform_.position_.x = canMinMoveX;
+	}
+	if (worldTransform_.position_.x > canMaxMoveX) {
+		worldTransform_.position_.x = canMaxMoveX;
+	}
+	if (worldTransform_.position_.y < canMinMoveY) {
+		worldTransform_.position_.y = canMinMoveY;
+	}
+	if (worldTransform_.position_.y > canMaxMoveY) {
+		worldTransform_.position_.y = canMaxMoveY;
+	}
 
 	worldTransform_.matWorld_ = ReCalcMatWorld(worldTransform_);
 

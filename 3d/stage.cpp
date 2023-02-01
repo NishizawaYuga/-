@@ -3,13 +3,13 @@
 #include "MatSet.h"
 #include "easing.h"
 
-void Stage::Initialize(Object3d* model, int stageData[32][32]) {
+void Stage::Initialize(Object3d* model, int stageData[17][128]) {
 	//NULLポインタチェック
 	assert(model);
 
 	//引数として受け取ったデータをメンバ変数に記録する
-	for (int y = 0; y < blockNum; y++) {	//i,jを本来使うが視覚的にわかりやすくするためx,yを使用
-		for (int x = 0; x < blockNum; x++) {
+	for (int y = 0; y < blockNumY; y++) {	//i,jを本来使うが視覚的にわかりやすくするためx,yを使用
+		for (int x = 0; x < blockNumX; x++) {
 			model_[y][x] = nullptr;
 			model_[y][x] = model;
 		}
@@ -37,12 +37,12 @@ void Stage::Initialize(Object3d* model, int stageData[32][32]) {
 		}
 	}*/
 	//周囲のみがズレるようにする設定方法
-	for (int y = 0; y < blockNum; y++) {	//i,jを本来使うが視覚的にわかりやすくするためx,yを使用
-		for (int x = 0; x < blockNum; x++) {
+	for (int y = 0; y < blockNumY; y++) {	//i,jを本来使うが視覚的にわかりやすくするためx,yを使用
+		for (int x = 0; x < blockNumX; x++) {
 			block[y][x].create = stageData[y][x];
 			block[y][x].pos.Initialize();
 			block[y][x].pos.scale_ = { 2,2,2 };
-			block[y][x].pos.position_ = { x * blockSize - 50.0f,y * -blockSize + 50.0f,-50.0f };
+			block[y][x].pos.position_ = { x * blockSize - 50.0f,y * -blockSize + 24.0f,-50.0f };
 			block[y][x].pos.UpdateMatrix();
 			model_[y][x]->SetWorldTransform(block[y][x].pos);
 			model_[y][x]->Update();
@@ -80,8 +80,8 @@ void Stage::Update(Vector3 player, bool cutFlag) {
 	//全ての足場の更新
 	CheckIfCut();
 
-	for (int y = 0; y < blockNum; y++) {
-		for (int x = 0; x < blockNum; x++) {
+	for (int y = 0; y < blockNumY; y++) {
+		for (int x = 0; x < blockNumX; x++) {
 			block[y][x].pos.matWorld_ = matSet.MatIdentity(block[y][x].pos);
 			block[y][x].pos.UpdateMatrix();// TransferMatrix();
 			model_[y][x]->SetWorldTransform(block[y][x].pos);
@@ -92,8 +92,8 @@ void Stage::Update(Vector3 player, bool cutFlag) {
 
 void Stage::Draw(/*ViewProjection viewProjection*/) {
 	//3Dモデルを描画
-	for (int y = 0; y < blockNum; y++) {
-		for (int x = 0; x < blockNum; x++) {
+	for (int y = 0; y < blockNumY; y++) {
+		for (int x = 0; x < blockNumX; x++) {
 			if (block[y][x].create) {	//生成フラグが立っているものだけ描画(それ以外は見えないが存在はしている)
 				model_[y][x]->Draw(block[y][x].pos/*, viewProjection*/);
 			}
@@ -102,10 +102,10 @@ void Stage::Draw(/*ViewProjection viewProjection*/) {
 }
 
 void Stage::CheckPos(Vector3* player) {
-	float positionX[32];
+	float positionX[128];
 	//float range = 100000.0f;
-	for (int y = 0; y < blockNum; y++) {
-		for (int x = 0; x < blockNum; x++) {
+	for (int y = 0; y < blockNumY; y++) {
+		for (int x = 0; x < blockNumX; x++) {
 			////プレイヤーと足場の距離を計算する
 			//positionX[x] = block[y][x].pos.translation_.x - player->x;
 			////プレイヤーより後ろにあるなら-1をかけて正の数に戻す
@@ -135,8 +135,8 @@ void Stage::CheckPos(Vector3* player) {
 		}
 	}
 	////最も距離が短かったブロックの番号を検索する
-	//for (int y = 0; y < blockNum; y++) {
-	//	for (int x = 0; x < blockNum; x++) {
+	//for (int y = 0; y < blockNumY; y++) {
+	//	for (int x = 0; x < blockNumX; x++) {
 	//		if (range == positionX[x]) {
 	//			//高さ的に射程範囲外だったら弾く
 	//			if (player->y - range < block[y][x].pos.translation_.y && player->y + range > block[y][x].pos.translation_.y) {
@@ -157,8 +157,8 @@ void Stage::CheckPos(Vector3* player) {
 }
 
 void Stage::CheckIfCut() {
-	for (int y = 0; y < blockNum; y++) {
-		for (int x = 0; x < blockNum; x++) {
+	for (int y = 0; y < blockNumY; y++) {
+		for (int x = 0; x < blockNumX; x++) {
 			//斬られたフラグがtrueかつ既に斬られているフラグがfalseかチェック
 			if (block[y][x].isCut && !block[y][x].cutted) {
 				//ずらす時間のカウントが始まっていればカウントを進める

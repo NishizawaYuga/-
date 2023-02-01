@@ -22,11 +22,9 @@ struct Block {	//実際に処理で使う足場のデータ
 class Stage {
 public:
 	//初期化
-	void Initialize(Object3d* model, int stageData[32][32]);
+	void Initialize(Object3d* model, int stageData[17][128]);
 	//更新
 	void Update(Vector3 player,bool cutFlag);
-	//テスト用更新
-	void UpdateTest();
 	//描画
 	void Draw(/*ViewProjection viewProjection*/);
 private:
@@ -36,13 +34,15 @@ private:
 	void CheckIfCut();
 private:
 	//ワールド座標
-	Block block[32][32];
+	//ブロックの数拡張
+	Block block[17][128];
 	//ブロック数
-	const int blockNum = 32;
+	const int blockNumX = 128;
+	const int blockNumY = 17;
 	//ブロックサイズ
 	const float blockSize = 4.0f;
 	//Model* model = nullptr;
-	Object3d* model_[32][32] = {nullptr};
+	Object3d* model_[17][128] = {nullptr};
 	//ズレる位置(疑似的だが2ブロック分ズレる)
 	const double slippingNumbers = 0.39;
 	//移動時間
@@ -50,7 +50,7 @@ private:
 
 	//debug用(リセット)
 	Input* input_ = nullptr;
-	float resetPosY[32];
+	float resetPosY[17];
 
 	//射程
 	const float range = 6.0f;
