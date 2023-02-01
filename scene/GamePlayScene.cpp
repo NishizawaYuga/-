@@ -65,7 +65,7 @@ void GamePlayScene::Initialize2d() {
 void GamePlayScene::Update3d() {
 	player_->Update();
 	stage_->Update(player_->GetPos(), player_->GetFlag());
-	enemy_->Update();
+	//enemy_->Update();
 }
 
 void GamePlayScene::Update2d() {
@@ -74,7 +74,7 @@ void GamePlayScene::Update2d() {
 void GamePlayScene::Draw3d() {
 	stage_->Draw();
 	player_->Draw(/*playerObject_,playerObject_*/);
-	enemy_->Draw();
+	//enemy_->Draw();
 }
 
 void GamePlayScene::Draw2d() {
