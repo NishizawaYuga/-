@@ -101,6 +101,12 @@ public: // 静的メンバ関数
 	static void SetTarget(Vector3 target);
 
 	/// <summary>
+	/// ベクトルによる移動(X,Yのみ)
+	/// </summary>
+	/// <param name="move">移動量</param>
+	static void SetCameraMoveVector(Vector3 pos);
+
+	/// <summary>
 	/// ベクトルによる移動
 	/// </summary>
 	/// <param name="move">移動量</param>

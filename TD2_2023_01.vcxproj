@@ -163,6 +163,7 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="base\WorldTransform.cpp" />
     <ClCompile Include="control\Input.cpp" />
+    <ClCompile Include="control\MoveCamera.cpp" />
     <ClCompile Include="directX\DirectXBasis.cpp" />
     <ClCompile Include="directX\DrawBasis.cpp" />
     <ClCompile Include="entity\Enemy.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="base\WorldTransform.h" />
     <ClInclude Include="control\Input.h" />
+    <ClInclude Include="control\MoveCamera.h" />
     <ClInclude Include="directX\DirectXBasis.h" />
     <ClInclude Include="directX\DrawBasis.h" />
     <ClInclude Include="entity\Enemy.h" />

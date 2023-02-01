@@ -99,6 +99,20 @@ void Object3d::SetTarget(Vector3 target) {
 	UpdateViewMatrix();
 }
 
+void Object3d::SetCameraMoveVector(Vector3 pos) {
+	Vector3 eye_moved = GetEye();
+	Vector3 target_moved = GetTarget();
+
+	eye_moved.x = pos.x;
+	//eye_moved.y = pos.y;
+
+	target_moved.x = pos.x;
+	//target_moved.y = pos.y;
+
+	SetEye(eye_moved);
+	SetTarget(target_moved);
+}
+
 void Object3d::CameraMoveVector(Vector3 move) {
 	Vector3 eye_moved = GetEye();
 	Vector3 target_moved = GetTarget();

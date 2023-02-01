@@ -1,11 +1,14 @@
 #include "GamePlayScene.h"
 #include "SafeDelete.h"
+#include <MoveCamera.h>
 
 DirectXBasis* GamePlayScene::dxBas_ = DirectXBasis::GetInstance();
 Input* GamePlayScene::input_ = Input::GetInstance();
 DrawBasis* GamePlayScene::drawBas_ = DrawBasis::GetInstance();
 
 void GamePlayScene::Initialize() {
+	//ステージデータコピー（仮配置）
+	/*data->copyData(stageData, 0);*/
 	Initialize2d();
 	Initialize3d();
 }
@@ -44,14 +47,21 @@ void GamePlayScene::Initialize3d() {
 	enemyObject_ = Object3d::Create();
 	enemyObject_->SetModel(enemyModel_);
 
+	skyModel_ = Model::LoadFromOBJ("skydome");
+	skyObject_ = Object3d::Create();
+	skyObject_->SetModel(skyModel_);
+
 	player_ = new Player();
 	player_->Initialize(playerObject_,reticleObject_,reticleSprite_);
 
 	stage_ = new Stage();
-	stage_->Initialize(blockObject_, stageData);
+	stage_->Initialize(blockObject_,stageData);
 
-	enemy_ = new Enemy();
-	enemy_->Initialize(enemyObject_);
+	skydome_ = new Skydome();
+	skydome_->Initialize(skyObject_);
+
+	/*enemy_ = new Enemy();
+	enemy_->Initialize(enemyObject_);*/
 }
 
 void GamePlayScene::Initialize2d() {
@@ -64,8 +74,10 @@ void GamePlayScene::Initialize2d() {
 
 void GamePlayScene::Update3d() {
 	player_->Update();
+	blockObject_->SetCameraMoveVector(player_->GetPos());
 	stage_->Update(player_->GetPos(), player_->GetFlag());
 	//enemy_->Update();
+	
 }
 
 void GamePlayScene::Update2d() {
@@ -74,6 +86,7 @@ void GamePlayScene::Update2d() {
 void GamePlayScene::Draw3d() {
 	stage_->Draw();
 	player_->Draw(/*playerObject_,playerObject_*/);
+	skydome_->Draw();
 	//enemy_->Draw();
 }
 

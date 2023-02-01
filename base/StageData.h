@@ -1,78 +1,11 @@
 #pragma once
-#include "BaseScene.h"
 
-#include "Input.h"
-#include "DrawBasis.h"
-#include "Model.h"
-#include "Sprite.h"
-#include "Object3d.h"
-
-#include "Player.h"
-#include "stage.h"
-#include <Enemy.h>
-#include <Skydome.h>
-
-
-#include <memory>
-#include <List>
-
-class GamePlayScene : public BaseScene {
+class StageData {
 public:
-	void Initialize() override;
-	void Update() override;
-	void Draw() override;
-	void Finalize() override;
-
+	//StageÇÃÉfÅ[É^ÇÉRÉsÅ[Ç∑ÇÈä÷êî
+	void copyData(int stage[32][32],int stageNumber);
 private:
-	void Initialize3d();
-	void Initialize2d();
-
-	void Update3d();
-	void Update2d();
-
-	void Draw3d();
-	void Draw2d();
-public:
-
-private:
-	//Âü∫Áõ§
-	static DirectXBasis* dxBas_;
-	static Input* input_;
-	static DrawBasis* drawBas_;
-
-	/// <summary>
-	/// „Ç™„Éñ„Ç∏„Çß„ÇØ„Éà
-	/// </summary>
-	
-	Player* player_ = nullptr;
-	Object3d* playerObject_ = nullptr;
-	Model* playerModel_ = nullptr;
-
-	Object3d* reticleObject_ = nullptr;
-	Model* reticleModel_ = nullptr;
-
-	Stage* stage_ = nullptr;
-	Object3d* blockObject_ = nullptr ;
-	Model* blockModel_ = nullptr;
-
-	Enemy* enemy_ = nullptr;
-	Object3d* enemyObject_ = nullptr;
-	Model* enemyModel_ = nullptr;
-
-	Skydome* skydome_ = nullptr;
-	Object3d* skyObject_ = nullptr;
-	Model* skyModel_ = nullptr;
-
-	/// <summary>
-	/// „Çπ„Éó„É©„Ç§„Éà
-	/// </summary>
-	Sprite* reticleSprite_ = nullptr;
-
-	//„Çπ„ÉÜ„Éº„Ç∏ÊÉÖÂ†±
-	
-};
-
-static int stageData[32][32] = {
+	int testStage[32][32] = {
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
@@ -83,7 +16,7 @@ static int stageData[32][32] = {
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
 		{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, },
 
-		{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, },	//Â§©‰∫ï
+		{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, },	//ìVà‰
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0, },
@@ -93,7 +26,7 @@ static int stageData[32][32] = {
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
 
-		{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, },	//Â∫ä
+		{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, },	//è∞
 		{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, },
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
@@ -112,4 +45,5 @@ static int stageData[32][32] = {
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, },
+	};
 };

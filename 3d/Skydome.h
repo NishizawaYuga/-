@@ -18,7 +18,7 @@ public:
 	/// <summary>
 	/// •`‰æ
 	/// </summary>
-	void Draw(ViewProjection& viewProjection_);
+	void Draw();
 	
 private:
 
