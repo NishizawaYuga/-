@@ -42,7 +42,7 @@ void Stage::Initialize(Object3d* model, int stageData[17][128]) {
 			block[y][x].create = stageData[y][x];
 			block[y][x].pos.Initialize();
 			block[y][x].pos.scale_ = { 2,2,2 };
-			block[y][x].pos.position_ = { x * blockSize - 50.0f,y * -blockSize + 24.0f,-50.0f };
+			block[y][x].pos.position_ = { x * blockSize - 50.0f,y * -blockSize + 26.0f,-50.0f };
 			block[y][x].pos.UpdateMatrix();
 			model_[y][x]->SetWorldTransform(block[y][x].pos);
 			model_[y][x]->Update();
