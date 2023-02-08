@@ -54,7 +54,7 @@ void GamePlayScene::Initialize3d() {
 	player_->Initialize(playerObject_,reticleObject_,reticleSprite_);
 
 	stage_ = new Stage();
-	stage_->Initialize(blockObject_,stageData);
+	stage_->Initialize(blockObject_,mainStage);
 
 	skydome_ = new Skydome();
 	skydome_->Initialize(skyObject_);
