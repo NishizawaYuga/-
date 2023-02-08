@@ -8,7 +8,6 @@ class Corsor {
 public:
 	Vector3 Get3DRethiclePosition(const Object3d* object,
 		const float distance, const bool isOnScreen);
-
 private:
 
 void GetMousePosition();

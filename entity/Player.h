@@ -15,7 +15,7 @@
 class Player {
 public:
 	void Initialize(Object3d* model,Object3d* model2,Sprite* sprite/*, ViewProjection& viewProjection*/);
-	void Update();
+	void Update();	//クリックワープのためにマウス側のオブジェクト座標が必要
 	void Draw(/*Object3d* object,Object3d* objectReticle*//*ViewProjection* viewProjection*/);
 	void DrawUI();
 
@@ -27,6 +27,8 @@ private:
 	void Move();
 	void Attack();
 	void Reticle();
+	//クリックした位置に飛ぶ
+	void ClickWarp();
 
 	Matrix4 ReCalcMatWorld(WorldTransform worldTransform);
 public:
@@ -49,4 +51,10 @@ private:
 
 	//斬ったフラグ
 	bool cutFlag;
+
+	//初期位置から移動した距離
+	float movingDistanceX = 0;
+	float movingDistanceY = 0;
+
+	//float differenceX = 0;
 };

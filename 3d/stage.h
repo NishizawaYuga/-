@@ -26,12 +26,14 @@ public:
 	//更新
 	void Update(Vector3 player,bool cutFlag);
 	//描画
-	void Draw(/*ViewProjection viewProjection*/);
+	void Draw(Vector3 playerPos);
 private:
 	//どの足場がプレイヤーと一番近いかチェック
 	void CheckPos(Vector3* player);
 	//前のブロックも斬られていたら自分もズレる関数
 	void CheckIfCut();
+	//ブロックの位置リセット（debug用）
+	void Reset();
 private:
 	//ワールド座標
 	//ブロックの数拡張

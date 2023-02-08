@@ -64,18 +64,12 @@ void Stage::Update(Vector3 player, bool cutFlag) {
 		CheckPos(&player);
 		//block[slash].translation_.y = -4.5f;
 	}
+#if _DEBUG
 	//Rキーが押されたらリセット
-	/*if (input_->TriggerKey(DIK_R)) {
-		for (int i = 0; i < blockNum; i++) {
-			block[i].pos.scale_ = { 2,2,2 };
-			block[i].pos.translation_ = { i * 4.0f - 50.0f,resetPosY,0.0f };
-			block[i].cutted = false;
-			block[i].isCut = false;
-			block[i].timer.nowTime = 0;
-			block[i].timer.beginCount = false;
-			block[i].timer.slash = 0;
-		}
-	}*/
+	if (input_->TriggerKey(DIK_R)) {
+		Reset();
+	}
+#endif
 
 	//全ての足場の更新
 	CheckIfCut();
@@ -90,12 +84,16 @@ void Stage::Update(Vector3 player, bool cutFlag) {
 	}
 }
 
-void Stage::Draw(/*ViewProjection viewProjection*/) {
+void Stage::Draw(Vector3 playerPos) {
+	const float drawingDistance = 100.0f;
 	//3Dモデルを描画
 	for (int y = 0; y < blockNumY; y++) {
 		for (int x = 0; x < blockNumX; x++) {
 			if (block[y][x].create) {	//生成フラグが立っているものだけ描画(それ以外は見えないが存在はしている)
-				model_[y][x]->Draw(block[y][x].pos/*, viewProjection*/);
+				float space = block[y][x].pos.position_.x - playerPos.x;
+				if (space < drawingDistance && space > -drawingDistance) {	//画面外のブロックは非表示にする（負荷軽減？）
+					model_[y][x]->Draw(block[y][x].pos/*, viewProjection*/);
+				}
 			}
 		}
 	}
@@ -178,6 +176,22 @@ void Stage::CheckIfCut() {
 				}
 
 			}
+		}
+	}
+}
+
+void Stage::Reset() {
+	for (int y = 0; y < blockNumY; y++) {	//i,jを本来使うが視覚的にわかりやすくするためx,yを使用
+		for (int x = 0; x < blockNumX; x++) {
+			block[y][x].pos.position_ = { x * blockSize - 50.0f,y * -blockSize + 26.0f,-50.0f };
+			block[y][x].pos.UpdateMatrix();
+			model_[y][x]->SetWorldTransform(block[y][x].pos);
+			model_[y][x]->Update();
+			block[y][x].cutted = false;
+			block[y][x].isCut = false;
+			block[y][x].timer.nowTime = 0;
+			block[y][x].timer.beginCount = false;
+			block[y][x].timer.slash = 0;
 		}
 	}
 }

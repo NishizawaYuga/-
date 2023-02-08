@@ -6,7 +6,7 @@
 
 //using namespace MathUtility;
 
-void Player::Initialize(Object3d* model,Object3d* model2,Sprite* sprite/*, ViewProjection& viewProjection*/) {
+void Player::Initialize(Object3d* model, Object3d* model2, Sprite* sprite/*, ViewProjection& viewProjection*/) {
 	assert(model);
 	//assert(&viewProjection);
 
@@ -29,6 +29,7 @@ void Player::Initialize(Object3d* model,Object3d* model2,Sprite* sprite/*, ViewP
 
 	worldTransform3DReticle_.Initialize();
 	worldTransform3DReticle_.scale_ = { 2,2,2 };
+	worldTransform3DReticle_.position_ = { 0,0,-50 };
 	objectReticle_->SetWorldTransform(worldTransform3DReticle_);
 
 	cutFlag = false;
@@ -46,8 +47,8 @@ void Player::Initialize(Object3d* model,Object3d* model2,Sprite* sprite/*, ViewP
 	//		Vector2(0.5f, 0.5f)
 	//	)
 	//);
-	
-	
+
+
 	//sprite2DRethicle_->SetSize(Vector2(64, 64));
 
 }
@@ -65,7 +66,10 @@ void Player::Update() {
 	/*for (std::unique_ptr<PlayerBullet>& bullet : bullets_) {
 		bullet->Update();
 	}*/
-
+	if (input_->TriggerMouse(0)) {
+		ClickWarp();
+		cutFlag = true;
+	}
 	objectReticle_->Update();
 	object_->Update();
 }
@@ -77,13 +81,12 @@ void Player::Draw(/*Object3d* object,Object3d* objectReticle*//*ViewProjection* 
 
 	objectReticle_->Draw(worldTransform3DReticle_ /*,viewProjection_*/);
 
-	object_->Draw(worldTransform_/*, *viewProjection */ );
+	object_->Draw(worldTransform_/*, *viewProjection */);
 
 	/*for (std::unique_ptr<PlayerBullet>& bullet : bullets_) {
 		bullet->Draw(viewProjection_);
 	}*/
 }
-
 void Player::DrawUI() {
 	sprite2DRethicle_->Draw();
 }
@@ -100,34 +103,42 @@ void Player::Move() {
 	const float canMaxMoveY = 20.0f;
 	const float canMinMoveY = -14.0f;
 
-/*	if (input_->GetJoystickState(0, joyState)) {
-		speed.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * 1;
-		speed.y += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * 1;
+	/*	if (input_->GetJoystickState(0, joyState)) {
+			speed.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * 1;
+			speed.y += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * 1;
+		}
+		else */
+	if (true) {
 	}
-	else */
-	if(true) {
+	if (input_->PressKey(DIK_D)) {
+		speed.x = 1;
 	}
-		if (input_->PressKey(DIK_D)) {
-			speed.x = 1;
-		}
 
-		if (input_->PressKey(DIK_A)) {
-			speed.x = -1;
-		}
+	if (input_->PressKey(DIK_A)) {
+		speed.x = -1;
+	}
 
-		if (input_->PressKey(DIK_W)) {
-			speed.y = 1;
-		}
+	if (input_->PressKey(DIK_W)) {
+		speed.y = 1;
+	}
 
-		if (input_->PressKey(DIK_S)) {
-			speed.y = -1;
-		}
-		if (input_->TriggerMouse(0)) {
-			cutFlag = true;
-		}
+	if (input_->PressKey(DIK_S)) {
+		speed.y = -1;
+	}
 
 	worldTransform_.position_.x += speed.x;
 	worldTransform_.position_.y += speed.y;
+	//移動距離を測る
+	const float canMaxMoveRX = 422.0f;
+	const float canMinMoveRX = -10.0f;
+	//移動制限
+	movingDistanceX += speed.x;
+	if (movingDistanceX > canMaxMoveRX || worldTransform_.position_.x > canMaxMoveRX) {
+		movingDistanceX = canMaxMoveRX;
+	}
+	if (movingDistanceX < canMinMoveRX || worldTransform_.position_.x < canMinMoveRX) {
+		movingDistanceX = canMinMoveRX;
+	}
 
 	//移動制限
 	if (worldTransform_.position_.x < canMinMoveX) {
@@ -195,12 +206,12 @@ void Player::Reticle() {
 	//	sprite2DRethicle_->SetPosition(spritePosition);
 	//}
 //	else 
-	if(true) {
+	if (true) {
 	}
-		//マウス座標を代入
-		sprite2DRethicle_->SetPosition(
-			Vector2(mousePosition.x, mousePosition.y));
-		sprite2DRethicle_->Update();
+	//マウス座標を代入
+	sprite2DRethicle_->SetPosition(
+		Vector2(mousePosition.x, mousePosition.y));
+	sprite2DRethicle_->Update();
 
 	//ビュープロジェクションビューポート合成行列
 	Matrix4 matViewPort = Matrix4Identity();
@@ -228,7 +239,7 @@ void Player::Reticle() {
 		sprite2DRethicle_->GetPosition().y,
 		1);
 	posFar = Vector3Transform(posFar, matInverseVPV);
-	
+
 	//レイ
 	Vector3 rayDirection = posFar - posNear;
 
@@ -238,7 +249,9 @@ void Player::Reticle() {
 	offset = Vector3Normalize(offset);
 
 	worldTransform3DReticle_.position_ = offset * kDistanceTestObject;
-	worldTransform3DReticle_.position_.z -= 50;
+	worldTransform3DReticle_.position_.x += movingDistanceX;
+	worldTransform3DReticle_.position_.y += movingDistanceY;
+	worldTransform3DReticle_.position_.z = worldTransform_.position_.z;
 
 	//再計算
 	worldTransform3DReticle_.matWorld_ = ReCalcMatWorld(worldTransform3DReticle_);
@@ -273,16 +286,43 @@ Matrix4 Player::ReCalcMatWorld(WorldTransform worldTransform) {
 	worldTransform.matWorld_ *=
 		Matrix4Rotation(worldTransform_.rotation_);
 
-//worldTransform.matWorld_ *=
-//	Matrix4RotationY(worldTransform.rotation_.y);
-//worldTransform.matWorld_ *=
-//	Matrix4RotationX(worldTransform.rotation_.z);
-//worldTransform.matWorld_ *=
-//	Matrix4RotationZ(worldTransform.rotation_.x);
+	//worldTransform.matWorld_ *=
+	//	Matrix4RotationY(worldTransform.rotation_.y);
+	//worldTransform.matWorld_ *=
+	//	Matrix4RotationX(worldTransform.rotation_.z);
+	//worldTransform.matWorld_ *=
+	//	Matrix4RotationZ(worldTransform.rotation_.x);
 
 	worldTransform.matWorld_ *=
 		Matrix4Translation(
 			worldTransform_.position_);
 
 	return worldTransform.matWorld_;
+}
+
+void Player::ClickWarp() {
+	float differenceX = 0;
+	//エリア制限で処理法を変える
+	const float canMaxMoveRX = 422.0f;
+	const float canMinMoveRX = -10.0f;
+	//先に差分を求める
+	if (movingDistanceX > canMaxMoveRX || worldTransform_.position_.x > canMaxMoveRX) {
+		differenceX = worldTransform3DReticle_.position_.x - canMaxMoveRX;
+	}
+	else
+		if (movingDistanceX < canMinMoveRX || worldTransform_.position_.x < canMinMoveRX) {
+			differenceX = worldTransform3DReticle_.position_.x - canMinMoveRX;
+		}
+		else {
+			differenceX = worldTransform3DReticle_.position_.x - worldTransform_.position_.x;
+		}
+	//float differenceY = objectReticle_->GetPosition().y + movingDistanceY - worldTransform_.position_.y;
+	//マウスに合わせたオブジェクトの座標 + 初期地点から移動した距離を足してワープするべき位置を出す
+	/*worldTransform_.position_.x = objectReticle_->GetPosition().x + movingDistanceX;
+	worldTransform_.position_.y = objectReticle_->GetPosition().y + movingDistanceY;*/
+	worldTransform_.position_.x = worldTransform3DReticle_.position_.x;
+	worldTransform_.position_.y = worldTransform3DReticle_.position_.y;
+
+	movingDistanceX += differenceX;
+	//movingDistanceY = movingDistanceY + differenceY;
 }

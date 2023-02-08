@@ -1,6 +1,5 @@
 #include "GamePlayScene.h"
 #include "SafeDelete.h"
-#include <MoveCamera.h>
 
 DirectXBasis* GamePlayScene::dxBas_ = DirectXBasis::GetInstance();
 Input* GamePlayScene::input_ = Input::GetInstance();
@@ -73,9 +72,10 @@ void GamePlayScene::Initialize2d() {
 }
 
 void GamePlayScene::Update3d() {
+	stage_->Update(player_->GetPos(), player_->GetFlag());
 	player_->Update();
 	blockObject_->SetCameraMoveVector(player_->GetPos());
-	stage_->Update(player_->GetPos(), player_->GetFlag());
+	
 	//enemy_->Update();
 	
 }
@@ -84,7 +84,7 @@ void GamePlayScene::Update2d() {
 }
 
 void GamePlayScene::Draw3d() {
-	stage_->Draw();
+	stage_->Draw(player_->GetPos());
 	player_->Draw(/*playerObject_,playerObject_*/);
 	skydome_->Draw();
 	//enemy_->Draw();

@@ -100,12 +100,6 @@
     <Filter Include="ヘッダー ファイル\Game\Enemy">
       <UniqueIdentifier>{8bedc1dd-2018-45b6-88be-02f0b4d1c40b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Game\Camera">
-      <UniqueIdentifier>{38577ab1-3006-4e73-b5f7-92a9bb888af5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\Camera">
-      <UniqueIdentifier>{1280ea4e-74da-428b-9b5c-bd4ac8a16627}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -212,9 +206,6 @@
     </ClCompile>
     <ClCompile Include="3d\Skydome.cpp">
       <Filter>ソース ファイル\Game\Field</Filter>
-    </ClCompile>
-    <ClCompile Include="control\MoveCamera.cpp">
-      <Filter>ソース ファイル\Game\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,9 +319,6 @@
     </ClInclude>
     <ClInclude Include="3d\Skydome.h">
       <Filter>ヘッダー ファイル\Game\Field</Filter>
-    </ClInclude>
-    <ClInclude Include="control\MoveCamera.h">
-      <Filter>ヘッダー ファイル\Game\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
