@@ -1,6 +1,5 @@
 #pragma once
 #include <WorldTransform.h>
-#include <Model.h>
 #include <ViewProjection.h>
 #include "Object3d.h"
 
@@ -19,13 +18,12 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
-	
+
 private:
 
 	//ワールド変換データ
 	WorldTransform worldtransform_;
 	//モデル
-	Object3d* model_ = nullptr;
 
+	Object3d* object = nullptr;
 };
-

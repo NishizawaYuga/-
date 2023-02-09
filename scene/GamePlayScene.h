@@ -63,6 +63,9 @@ private:
 	Object3d* skyObject_ = nullptr;
 	Model* skyModel_ = nullptr;
 
+	Object3d* goalObject_ = nullptr;
+	Model* goalModel_ = nullptr;
+
 	/// <summary>
 	/// スプライト
 	/// </summary>

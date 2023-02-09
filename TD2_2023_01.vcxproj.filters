@@ -207,6 +207,9 @@
     <ClCompile Include="3d\Skydome.cpp">
       <Filter>ソース ファイル\Game\Field</Filter>
     </ClCompile>
+    <ClCompile Include="entity\Goal.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="directX\DirectXBasis.h">
@@ -319,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="3d\Skydome.h">
       <Filter>ヘッダー ファイル\Game\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="entity\Goal.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

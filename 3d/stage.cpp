@@ -3,7 +3,7 @@
 #include "MatSet.h"
 #include "easing.h"
 
-void Stage::Initialize(Object3d* model, int stageData[17][128]) {
+void Stage::Initialize(Object3d* model, Object3d* goalModel, int stageData[17][128]) {
 	//NULLポインタチェック
 	assert(model);
 
@@ -55,10 +55,15 @@ void Stage::Initialize(Object3d* model, int stageData[17][128]) {
 		resetPosY[y] = y * 4.0f - 50.0f;
 	}
 
+	goal_ = new Goal();
+	goal_->Initialize(goalModel);
+
 	input_ = Input::GetInstance();
 }
 
 void Stage::Update(Vector3 player, bool cutFlag) {
+	goal_->Update(player, cutFlag);
+
 	MatSet2 matSet;
 	if (cutFlag) {
 		CheckPos(&player);
@@ -97,6 +102,12 @@ void Stage::Draw(Vector3 playerPos) {
 			}
 		}
 	}
+
+	goal_->Draw(playerPos);
+}
+
+Stage::~Stage() {
+	delete goal_;
 }
 
 void Stage::CheckPos(Vector3* player) {

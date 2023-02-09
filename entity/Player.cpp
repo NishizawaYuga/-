@@ -95,6 +95,7 @@ void Player::Move() {
 	//XINPUT_STATE joyState;
 
 	Vector2 speed;
+	
 
 	cutFlag = false;
 
@@ -111,10 +112,13 @@ void Player::Move() {
 	if (true) {
 	}
 	if (input_->PressKey(DIK_D)) {
+		worldTransform_.rotation_.y = -ConvertToRadian(90);
 		speed.x = 1;
 	}
 
 	if (input_->PressKey(DIK_A)) {
+
+		worldTransform_.rotation_.y = ConvertToRadian(90);
 		speed.x = -1;
 	}
 

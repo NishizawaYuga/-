@@ -50,11 +50,15 @@ void GamePlayScene::Initialize3d() {
 	skyObject_ = Object3d::Create();
 	skyObject_->SetModel(skyModel_);
 
+	goalModel_ = Model::LoadFromOBJ("goal");
+	goalObject_ = Object3d::Create();
+	goalObject_->SetModel(goalModel_);
+
 	player_ = new Player();
 	player_->Initialize(playerObject_,reticleObject_,reticleSprite_);
 
 	stage_ = new Stage();
-	stage_->Initialize(blockObject_,mainStage);
+	stage_->Initialize(blockObject_,goalObject_,mainStage);
 
 	skydome_ = new Skydome();
 	skydome_->Initialize(skyObject_);

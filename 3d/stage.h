@@ -4,6 +4,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Input.h"
+#include "Goal.h"
 
 struct Timer {	//イージング用データ
 	float nowTime;	//経過時間
@@ -22,11 +23,14 @@ struct Block {	//実際に処理で使う足場のデータ
 class Stage {
 public:
 	//初期化
-	void Initialize(Object3d* model, int stageData[17][128]);
+	void Initialize(Object3d* model, Object3d* goalModel, int stageData[17][128]);
 	//更新
 	void Update(Vector3 player,bool cutFlag);
 	//描画
 	void Draw(Vector3 playerPos);
+
+	Stage() = default;
+	~Stage();
 private:
 	//どの足場がプレイヤーと一番近いかチェック
 	void CheckPos(Vector3* player);
@@ -56,4 +60,6 @@ private:
 
 	//射程
 	const float range = 6.0f;
+
+	Goal* goal_ = nullptr;
 };
